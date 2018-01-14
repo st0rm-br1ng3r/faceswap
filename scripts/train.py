@@ -22,9 +22,9 @@ class TrainingProcessor(object):
         print("Training data directory: {}".format(self.arguments.model_dir))
 
         try:
-            encoder.load_weights(self.arguments.model_dir + '/encoder.h5')
-            decoder_A.load_weights(self.arguments.model_dir + '/decoder_A.h5')
-            decoder_B.load_weights(self.arguments.model_dir + '/decoder_B.h5')
+            encoder.load_weights(self.arguments.model_dir + '/' + self.arguments.encoderName + '.h5')
+            decoder_A.load_weights(self.arguments.model_dir + '/' + self.arguments.decoder_A_Name + '.h5')
+            decoder_B.load_weights(self.arguments.model_dir + '/' + self.arguments.decoder_B_Name + '.h5')
         except Exception as e:
             print('Not loading existing training data.')
             print(e)
@@ -52,6 +52,24 @@ class TrainingProcessor(object):
                             default="input_B",
                             help="Input directory. A directory containing training images for face B.\
                              Defaults to 'input'")
+        parser.add_argument('--name-enc',
+                            action='store',
+                            dest="encoderName",
+                            default="encoder",
+                            help="Name of encoder.\
+                             Defaults to 'encoder'")
+        parser.add_argument('--name-A',
+                            action='store',
+                            dest="decoder_A_Name",
+                            default="decoder_A",
+                            help="Name of decoder A.\
+                             Defaults to 'decoder_A'")
+        parser.add_argument('--name-B',
+                            action='store',
+                            dest="decoder_B_Name",
+                            default="decoder_B",
+                            help="Name of decoder B.\
+                             Defaults to 'decoder_B'")
         parser.add_argument('-m', '--model-dir',
                             action=FullPaths,
                             dest="model_dir",
@@ -87,9 +105,9 @@ class TrainingProcessor(object):
         return parser
 
     def save_model_weights(self):
-        encoder.save_weights(self.arguments.model_dir + '/encoder.h5')
-        decoder_A.save_weights(self.arguments.model_dir + '/decoder_A.h5')
-        decoder_B.save_weights(self.arguments.model_dir + '/decoder_B.h5')
+        encoder.save_weights(self.arguments.model_dir + '/' + self.arguments.encoderName + '.h5')
+        decoder_A.save_weights(self.arguments.model_dir + '/' + self.arguments.decoder_A_Name + '.h5')
+        decoder_B.save_weights(self.arguments.model_dir + '/' + self.arguments.decoder_B_Name + '.h5')
         print('save model weights')
 
     def show_sample(self, test_A, test_B):
